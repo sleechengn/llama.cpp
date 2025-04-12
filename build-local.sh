@@ -18,6 +18,9 @@ sed -i '/^#APT-PLACE-HOLDER.*/i\RUN echo "deb https://mirrors.tuna.tsinghua.edu.
 sed -i '/^#APT-PLACE-HOLDER.*/i\RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse" >> /etc/apt/sources.list' Dockerfile
 sed -i '/^#APT-PLACE-HOLDER.*/i\RUN apt update' Dockerfile
 
+sed -i '/.*echo\sinstall\ssource.*/d' Dockerfile
+sed -i '/^#CUDA-INSTALL.*/i\run --mount=type=bind,target=/root/.source,rw,source=.source set -e && apt install -y aria2 gcc make && chmod +x /root/.source/cuda_12.6.3_560.35.05_linux.run && /root/.source/cuda_12.6.3_560.35.05_linux.run --silent --toolkit' Dockerfile
+
 ./build.sh 192.168.13.73:5000/sleechengn/llama.cpp:latest
 docker push 192.168.13.73:5000/sleechengn/llama.cpp:latest
 

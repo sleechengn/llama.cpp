@@ -39,6 +39,17 @@ RUN apt install -y nginx ttyd
 RUN rm -rf /etc/nginx/sites-enabled/default
 ADD ./NGINX /etc/nginx/sites-enabled/
 
+run set -e && echo install source \
+        && echo install source && apt install -y aria2 gcc make \
+        && echo install source && cd /opt \
+        && echo install source && aria2c --max-connection-per-server=10 --min-split-size=1M --max-concurrent-downloads=8 https://developer.download.nvidia.com/compute/cuda/12.6.3/local_installers/cuda_12.6.3_560.35.05_linux.run  \
+        && echo install source && chmod +x cuda_12.6.3_560.35.05_linux.run \
+        && echo install source && ./cuda_12.6.3_560.35.05_linux.run --silent --toolkit \
+        && echo install source && rm -rf cuda_12.6.3_560.35.05_linux.run
+#CUDA-INSTALL
+env CUDA_HOME=/usr/local/cuda-12.6
+
+
 copy ./docker-entrypoint.sh /
 run chmod +x /docker-entrypoint.sh
 cmd ["/docker-entrypoint.sh"]
