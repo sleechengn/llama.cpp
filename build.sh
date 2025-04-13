@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 DG=$1
 if [ $DG ]; then
-		docker build . -t $DG
+		docker --debug build . -t $DG
 	else
-		docker build . -t sleechengn/ollama:latest
+		docker --debug build . -t sleechengn/llama.cpp:latest
 fi
